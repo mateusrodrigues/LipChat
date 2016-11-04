@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using LipChat.Server.Data;
-using LipChat.Server.Models;
+using LipChat.Library.Models;
 
 namespace LipChat.Server.Controllers.API
 {
@@ -19,8 +19,19 @@ namespace LipChat.Server.Controllers.API
         private ChatDbContext db = new ChatDbContext();
 
         // GET: api/Messages
-        public IEnumerable<Message> GetMessages()
+        public IEnumerable<Message> GetMessages(int? last)
         {
+            if (last.HasValue)
+            {
+                var numMessages = db.Messages.Count();
+
+                var result = db.Messages
+                    .ToList()
+                    .Skip(numMessages - last.Value);
+
+                return result;
+            }
+
             return db.Messages.ToList();
         }
 

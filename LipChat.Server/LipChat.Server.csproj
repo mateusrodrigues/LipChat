@@ -174,7 +174,6 @@
       <DependentUpon>201611040206534_AddMessage.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +227,12 @@
     <EmbeddedResource Include="Migrations\201611040206534_AddMessage.resx">
       <DependentUpon>201611040206534_AddMessage.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LipChat.Library\LipChat.Library.csproj">
+      <Project>{6cfee2e4-c096-4452-a742-1993ea848237}</Project>
+      <Name>LipChat.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
