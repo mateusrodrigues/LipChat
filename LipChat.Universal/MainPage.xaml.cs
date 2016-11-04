@@ -1,5 +1,8 @@
-﻿using LipChat.Library.Models;
+﻿using LipChat.Library;
+using LipChat.Library.Models;
 using LipChat.Universal.Helpers;
+using Microsoft.AspNet.SignalR.Client;
+using Microsoft.AspNet.SignalR.Client.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,6 +29,8 @@ namespace LipChat.Universal
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        HubConnection connection;
+        IHubProxy _hub;
         public ObservableCollection<Message> Messages { get; set; }
 
         public MainPage()
@@ -34,6 +39,10 @@ namespace LipChat.Universal
             Messages = new ObservableCollection<Message>();
 
             messagesListView.ItemsSource = Messages;
+
+            connection = new HubConnection(Constants.APIAddress);
+            _hub = connection.CreateHubProxy("ChatHub");
+            Task.Factory.StartNew(() => connection.Start().Wait());
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -43,6 +52,16 @@ namespace LipChat.Universal
             {
                 Messages.Add(m);
             });
+
+            _hub.On("receive", async (message) =>
+            {
+                var newMessage = new Message { MessageID = Guid.NewGuid(), Content = message };
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
+                    () =>
+                    {
+                        AddMessageToList(newMessage);
+                    });
+            });
         }
 
         private async void btnSend_Click(object sender, RoutedEventArgs e)
@@ -51,9 +70,17 @@ namespace LipChat.Universal
             {
                 tbMessage.IsEnabled = false;
                 await MessageService.PostMessageAsync(tbMessage.Text);
+                await _hub.Invoke("Send", tbMessage.Text);
                 tbMessage.IsEnabled = true;
                 tbMessage.Text = string.Empty;
             }
         }
+
+        #region Helpers
+        private void AddMessageToList(Message message)
+        {
+            Messages.Add(message);
+        }
+        #endregion
     }
 }

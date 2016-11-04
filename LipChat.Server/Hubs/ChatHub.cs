@@ -8,9 +8,9 @@ namespace LipChat.Server.Hubs
 {
     public class ChatHub : Hub
     {
-        public void Hello(string name, string message)
+        public void Send(string message)
         {
-            Clients.All.syncMessage(name, message);
+            Clients.All.receive(message);
         }
     }
 }
