@@ -3,8 +3,29 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{1B0FC1AC-566A-4117-850A-A83FB9769C79}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{BF638522-59B7-4045-A852-D959F60B14C0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{F1D380C2-61DF-4FFC-8400-BE483B0A6C59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LipChat.Server", "LipChat.Server\LipChat.Server.csproj", "{705789CC-4093-4ABA-B736-2C57BAC7DC1E}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{705789CC-4093-4ABA-B736-2C57BAC7DC1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{705789CC-4093-4ABA-B736-2C57BAC7DC1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{705789CC-4093-4ABA-B736-2C57BAC7DC1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{705789CC-4093-4ABA-B736-2C57BAC7DC1E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{705789CC-4093-4ABA-B736-2C57BAC7DC1E} = {BF638522-59B7-4045-A852-D959F60B14C0}
 	EndGlobalSection
 EndGlobal
