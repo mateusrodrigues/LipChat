@@ -40,7 +40,9 @@ namespace LipChat.Universal.Helpers
             {
                 client.BaseAddress = new Uri(Constants.GetAPIAddress(ENVIRONMENT));
 
-                var postMessage = JsonConvert.SerializeObject(new { Content = content });
+                var postMessage = JsonConvert.SerializeObject(new Message { Content = content,
+                    DateTime = DateTime.UtcNow.AddHours(-3), Sender = "Universal" });
+
                 var response = await client.PostAsync("api/messages", new StringContent(postMessage, Encoding.UTF8,
                     "application/json"));
 

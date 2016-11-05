@@ -20,12 +20,15 @@
         <ListView x:Name="messagesListView" Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell>
+                    <TextCell Detail="{Binding Content}" Text="{Binding Sender}"
+                              DetailColor="Black"></TextCell>
+                    <!--<ViewCell>
                         <StackLayout>
-                            <Label Text="{Binding MessageID}"></Label>
-                            <Label Text="{Binding Content}"></Label>
+                            <Label Text="{Binding Sender}" FontAttributes="Bold"></Label>
+                            <Label Text="{Binding DateTime}" FontSize="9"></Label>
+                            <Label Text="{Binding Content}" FontSize="20"></Label>
                         </StackLayout>
-                    </ViewCell>
+                    </ViewCell>-->
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

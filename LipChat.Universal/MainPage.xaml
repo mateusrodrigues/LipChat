@@ -22,9 +22,11 @@
         <ListView x:Name="messagesListView" Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding MessageID}"></TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Sender}" FontWeight="Bold"></TextBlock>
+                        <TextBlock Text="{Binding DateTime}" FontSize="9pt"></TextBlock>
                         <TextBlock Text="{Binding Content}" FontSize="32pt"></TextBlock>
+                        <Rectangle HorizontalAlignment="Stretch" Width="1" Height="2" Stroke="Blue"></Rectangle>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
