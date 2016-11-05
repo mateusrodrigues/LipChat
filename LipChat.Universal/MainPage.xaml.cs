@@ -3,6 +3,7 @@ using LipChat.Library.Models;
 using LipChat.Universal.Helpers;
 using Microsoft.AspNet.SignalR.Client;
 using Microsoft.AspNet.SignalR.Client.Hubs;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -60,7 +61,8 @@ namespace LipChat.Universal
 
             _hub.On("receive", async (message) =>
             {
-                var newMessage = new Message { MessageID = Guid.NewGuid(), Content = message };
+                Message newMessage = JsonConvert.DeserializeObject<Message>(message);
+
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
                     () =>
                     {
@@ -74,8 +76,10 @@ namespace LipChat.Universal
             if (tbMessage.Text.Length > 0)
             {
                 tbMessage.IsEnabled = false;
-                await MessageService.PostMessageAsync(tbMessage.Text);
-                await _hub.Invoke("Send", tbMessage.Text);
+
+                var message = await MessageService.PostMessageAsync(tbMessage.Text);
+                await _hub.Invoke("Send", JsonConvert.SerializeObject(message));
+
                 tbMessage.IsEnabled = true;
                 tbMessage.Text = string.Empty;
             }

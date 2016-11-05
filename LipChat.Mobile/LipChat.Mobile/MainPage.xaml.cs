@@ -2,6 +2,7 @@
 using LipChat.Library.Models;
 using LipChat.Mobile.Helpers;
 using Microsoft.AspNet.SignalR.Client;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -44,7 +45,8 @@ namespace LipChat.Mobile
 
             Action<string> receiveMessage = (message) =>
             {
-                var newMessage = new Message { MessageID = Guid.NewGuid(), Content = message };
+                Message newMessage = JsonConvert.DeserializeObject<Message>(message);
+
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     AddMessageToList(newMessage);
@@ -60,8 +62,10 @@ namespace LipChat.Mobile
             if (tbMessage.Text.Length > 0)
             {
                 tbMessage.IsEnabled = false;
-                await MessageService.PostMessageAsync(tbMessage.Text);
-                await _hub.Invoke("Send", tbMessage.Text);
+
+                var message = await MessageService.PostMessageAsync(tbMessage.Text);
+                await _hub.Invoke("Send", JsonConvert.SerializeObject(message));
+
                 tbMessage.IsEnabled = true;
                 tbMessage.Text = string.Empty;
             }
