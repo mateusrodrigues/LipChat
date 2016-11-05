@@ -22,7 +22,7 @@
         <ListView x:Name="messagesListView" Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
                         <TextBlock Text="{Binding Sender}" FontWeight="Bold"></TextBlock>
                         <TextBlock Text="{Binding DateTime}" FontSize="9pt"></TextBlock>
                         <TextBlock Text="{Binding Content}" FontSize="32pt"></TextBlock>

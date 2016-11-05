@@ -50,6 +50,8 @@ namespace LipChat.Mobile
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     AddMessageToList(newMessage);
+                    var lastMessage = this.messagesListView.ItemsSource.Cast<object>().LastOrDefault();
+                    messagesListView.ScrollTo(lastMessage, ScrollToPosition.End, true);
                 });
             };
 

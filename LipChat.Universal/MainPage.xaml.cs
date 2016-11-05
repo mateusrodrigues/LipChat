@@ -67,6 +67,7 @@ namespace LipChat.Universal
                     () =>
                     {
                         AddMessageToList(newMessage);
+                        messagesListView.ScrollIntoView(messagesListView.Items.LastOrDefault());
                     });
             });
         }
