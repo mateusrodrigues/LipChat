@@ -173,6 +173,10 @@
     <Compile Include="Migrations\201611040206534_AddMessage.Designer.cs">
       <DependentUpon>201611040206534_AddMessage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611052117141_AddSenderDateTime.cs" />
+    <Compile Include="Migrations\201611052117141_AddSenderDateTime.Designer.cs">
+      <DependentUpon>201611052117141_AddSenderDateTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -226,6 +230,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611040206534_AddMessage.resx">
       <DependentUpon>201611040206534_AddMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611052117141_AddSenderDateTime.resx">
+      <DependentUpon>201611052117141_AddSenderDateTime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

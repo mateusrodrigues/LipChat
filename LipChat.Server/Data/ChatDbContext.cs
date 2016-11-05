@@ -1,4 +1,5 @@
 ﻿using LipChat.Library.Models;
+using LipChat.Server.Migrations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,7 +15,7 @@ namespace LipChat.Server.Data
 
         public ChatDbContext() : base("DefaultConnection")
         {
-            
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ChatDbContext, Configuration>());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
