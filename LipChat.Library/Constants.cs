@@ -7,11 +7,16 @@ namespace LipChat.Library
 {
     public static class Constants
     {
-        public static string APIAddress
+        public static string GetAPIAddress(string environment = "Development")
         {
-            get
+            switch (environment)
             {
-                return "https://localhost:44332";
+                case "Development":
+                    return "https://localhost:44332";
+                case "Production":
+                    return "https://lipchat-api.azurewebsites.net";
+                default:
+                    return "https://localhost:44332";
             }
         }
     }

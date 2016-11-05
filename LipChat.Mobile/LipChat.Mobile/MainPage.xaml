@@ -10,24 +10,27 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="5*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ListView x:Name="messagesListView" Grid.Row="0">
+        <Label x:Name="loadingLabel" Text="Loading..." IsVisible="True"></Label>
+        
+        <ListView x:Name="messagesListView" Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout>
                             <Label Text="{Binding MessageID}"></Label>
-                            <Label Text="{Binding Content}" FontSize="32"></Label>
+                            <Label Text="{Binding Content}"></Label>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>

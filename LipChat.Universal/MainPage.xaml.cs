@@ -29,10 +29,13 @@ namespace LipChat.Universal
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private readonly string ENVIRONMENT = "Production";
+
         HubConnection connection;
         IHubProxy _hub;
-        public ObservableCollection<Message> Messages { get; set; }
 
+        public ObservableCollection<Message> Messages { get; set; }
+        
         public MainPage()
         {
             this.InitializeComponent();
@@ -40,7 +43,7 @@ namespace LipChat.Universal
 
             messagesListView.ItemsSource = Messages;
 
-            connection = new HubConnection(Constants.APIAddress);
+            connection = new HubConnection(Constants.GetAPIAddress(ENVIRONMENT));
             _hub = connection.CreateHubProxy("ChatHub");
             Task.Factory.StartNew(() => connection.Start().Wait());
         }
@@ -52,6 +55,8 @@ namespace LipChat.Universal
             {
                 Messages.Add(m);
             });
+
+            progressRing.Visibility = Visibility.Collapsed;
 
             _hub.On("receive", async (message) =>
             {

@@ -12,11 +12,13 @@ namespace LipChat.Mobile.Helpers
 {
     public class MessageService
     {
+        private static readonly string ENVIRONMENT = "Production";
+
         public static async Task<IEnumerable<Message>> GetMessagesAsync(int last = 100)
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(Constants.APIAddress);
+                client.BaseAddress = new Uri(Constants.GetAPIAddress(ENVIRONMENT));
 
                 var response = await client.GetAsync($"api/messages?last={last}");
 
@@ -36,7 +38,7 @@ namespace LipChat.Mobile.Helpers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(Constants.APIAddress);
+                client.BaseAddress = new Uri(Constants.GetAPIAddress(ENVIRONMENT));
 
                 var postMessage = JsonConvert.SerializeObject(new { Content = content });
                 var response = await client.PostAsync("api/messages", new StringContent(postMessage, Encoding.UTF8,

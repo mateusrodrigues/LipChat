@@ -14,6 +14,7 @@ namespace LipChat.Mobile
 {
     public partial class MainPage : ContentPage
     {
+        private readonly string ENVIRONMENT = "Production";
         HubConnection _connection;
         IHubProxy _hub;
 
@@ -22,11 +23,12 @@ namespace LipChat.Mobile
         public MainPage()
         {
             InitializeComponent();
+
             Messages = new ObservableCollection<Message>();
 
             messagesListView.ItemsSource = Messages;
 
-            _connection = new HubConnection(Constants.APIAddress);
+            _connection = new HubConnection(Constants.GetAPIAddress(ENVIRONMENT));
             _hub = _connection.CreateHubProxy("ChatHub");
             Task.Factory.StartNew(() => _connection.Start().Wait());
         }
@@ -50,6 +52,7 @@ namespace LipChat.Mobile
             };
 
             _hub.On("receive", receiveMessage);
+            loadingLabel.IsVisible = false;
         }
 
         private async void btnSend_Clicked(object sender, EventArgs e)
