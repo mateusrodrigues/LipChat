@@ -2,10 +2,42 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:LipChat.Mobile"
-             x:Class="LipChat.Mobile.MainPage">
+             x:Class="LipChat.Mobile.MainPage"
+             Appearing="ContentPage_Appearing" >
 
-  <Label Text="Welcome to Xamarin Forms!"
-           VerticalOptions="Center"
-           HorizontalOptions="Center" />
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <ListView x:Name="messagesListView" Grid.Row="0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout>
+                            <Label Text="{Binding MessageID}"></Label>
+                            <Label Text="{Binding Content}" FontSize="32"></Label>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Entry x:Name="tbMessage" Grid.Column="0" Placeholder="Your message..."></Entry>
+
+            <Button x:Name="btnSend" Grid.Column="1" Grid.Row="0" Text="Send"
+                    HorizontalOptions="Fill" VerticalOptions="Fill" Clicked="btnSend_Clicked"></Button>
+        </Grid>
+    </Grid>
 
 </ContentPage>
