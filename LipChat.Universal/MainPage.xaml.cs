@@ -41,16 +41,18 @@ namespace LipChat.Universal
         {
             this.InitializeComponent();
             Messages = new ObservableCollection<Message>();
-
+            // Set the binding source for the list
             messagesListView.ItemsSource = Messages;
-
+            // Create new connection to the real-time server
             connection = new HubConnection(Constants.GetAPIAddress(ENVIRONMENT));
             _hub = connection.CreateHubProxy("ChatHub");
             Task.Factory.StartNew(() => connection.Start().Wait());
         }
 
+        // When page is loaded:
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            // Get persisted messages from the API and add them to the list
             var messages = await MessageService.GetMessagesAsync();
             messages.ToList().ForEach(m =>
             {
@@ -59,10 +61,12 @@ namespace LipChat.Universal
 
             progressRing.Visibility = Visibility.Collapsed;
 
+            // Describe what to do when new message is received through the
+            // real-time channel
             _hub.On("receive", async (message) =>
             {
                 Message newMessage = JsonConvert.DeserializeObject<Message>(message);
-                
+                // Add message to the list on the UI thread
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
                     () =>
                     {
@@ -72,6 +76,7 @@ namespace LipChat.Universal
             });
         }
 
+        // When button is clicked:
         private async void btnSend_Click(object sender, RoutedEventArgs e)
         {
             if (tbMessage.Text.Length > 0)
