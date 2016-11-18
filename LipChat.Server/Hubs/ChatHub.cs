@@ -10,7 +10,7 @@ namespace LipChat.Server.Hubs
     {
         public void Send(string message)
         {
-            Clients.All.receive(message);
+            Clients.Others.receive(message);
         }
     }
 }

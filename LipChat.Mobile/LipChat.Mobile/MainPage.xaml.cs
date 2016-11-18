@@ -65,7 +65,13 @@ namespace LipChat.Mobile
             {
                 tbMessage.IsEnabled = false;
 
+                // Post message to API and get returned object
                 var message = await MessageService.PostMessageAsync(tbMessage.Text);
+
+                // Add object to local messages collection and scroll to it
+                Messages.Add(message);
+                messagesListView.ScrollTo(message, ScrollToPosition.End, true);
+                // Invoke real-time event to broadcast message to other devices
                 await _hub.Invoke("Send", JsonConvert.SerializeObject(message));
 
                 tbMessage.IsEnabled = true;

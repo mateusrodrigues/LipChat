@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <ProgressBar x:Name="progressRing" IsIndeterminate="True"></ProgressBar>
-        
+
         <ListView x:Name="messagesListView" Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -26,7 +26,8 @@
                         <TextBlock Text="{Binding Sender}" FontWeight="Bold"></TextBlock>
                         <TextBlock Text="{Binding DateTime}" FontSize="9pt"></TextBlock>
                         <TextBlock Text="{Binding Content}" FontSize="32pt"></TextBlock>
-                        <Rectangle HorizontalAlignment="Stretch" Width="1" Height="2" Stroke="Blue"></Rectangle>
+                        <Border BorderThickness="1" BorderBrush="{StaticResource ApplicationForegroundThemeBrush}"
+                                HorizontalAlignment="Stretch"></Border>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -62,7 +62,7 @@ namespace LipChat.Universal
             _hub.On("receive", async (message) =>
             {
                 Message newMessage = JsonConvert.DeserializeObject<Message>(message);
-
+                
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
                     () =>
                     {
@@ -78,7 +78,13 @@ namespace LipChat.Universal
             {
                 tbMessage.IsEnabled = false;
 
+                // Post message to API and get returned object
                 var message = await MessageService.PostMessageAsync(tbMessage.Text);
+
+                // Add object to local messages collection and scroll to it
+                Messages.Add(message);
+                messagesListView.ScrollIntoView(messagesListView.Items.LastOrDefault());
+                // Invoke real-time event to broadcast message to other devices
                 await _hub.Invoke("Send", JsonConvert.SerializeObject(message));
 
                 tbMessage.IsEnabled = true;

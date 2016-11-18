@@ -19,6 +19,8 @@ namespace LipChat.Server.Controllers.API
         private ChatDbContext db = new ChatDbContext();
 
         // GET: api/Messages
+        [HttpGet]
+        [Route("api/Messages")]
         public IEnumerable<Message> GetMessages(int? last)
         {
             if (last.HasValue)
@@ -36,6 +38,7 @@ namespace LipChat.Server.Controllers.API
         }
 
         // GET: api/Messages/5
+        [HttpGet]
         [ResponseType(typeof(Message))]
         public async Task<IHttpActionResult> GetMessage(Guid id)
         {
@@ -49,6 +52,7 @@ namespace LipChat.Server.Controllers.API
         }
 
         // POST: api/Messages
+        [HttpPost]
         [ResponseType(typeof(Message))]
         public async Task<IHttpActionResult> PostMessage(Message message)
         {
@@ -64,6 +68,7 @@ namespace LipChat.Server.Controllers.API
         }
 
         // DELETE: api/Messages/5
+        [HttpDelete]
         [ResponseType(typeof(Message))]
         public async Task<IHttpActionResult> DeleteMessage(Guid id)
         {
@@ -77,6 +82,19 @@ namespace LipChat.Server.Controllers.API
             await db.SaveChangesAsync();
 
             return Ok(message);
+        }
+
+        // DELETE: api/Messages
+        [HttpDelete]
+        [Route("api/Messages")]
+        public async Task<IHttpActionResult> DeleteAllMessages()
+        {
+            var messages = await db.Messages.ToListAsync();
+            db.Messages.RemoveRange(messages);
+
+            db.SaveChanges();
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         protected override void Dispose(bool disposing)
